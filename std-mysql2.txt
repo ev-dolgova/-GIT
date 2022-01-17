@@ -1,0 +1,243 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Хост: std-mysql
+-- Время создания: Янв 17 2022 г., 15:43
+-- Версия сервера: 5.7.26-0ubuntu0.16.04.1
+-- Версия PHP: 7.4.20
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- База данных: `std_1295_dv`
+--
+CREATE DATABASE IF NOT EXISTS `std_1295_dv` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `std_1295_dv`;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `client(HUB)`
+--
+
+CREATE TABLE `client(HUB)` (
+  `id` int(20) NOT NULL,
+  `id_client_company` int(50) NOT NULL,
+  `id_client_agent` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `client(Satellite)`
+--
+
+CREATE TABLE `client(Satellite)` (
+  `id` int(20) NOT NULL,
+  `company VARCHAR` varchar(50) NOT NULL,
+  `agent VARCHAR` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `drivers (HUB)`
+--
+
+CREATE TABLE `drivers (HUB)` (
+  `id` int(20) NOT NULL,
+  `id_drivers_name` int(20) NOT NULL,
+  `id_drivers_car` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `drivers_car (Satellite)`
+--
+
+CREATE TABLE `drivers_car (Satellite)` (
+  `id` int(20) NOT NULL,
+  `id_drivers_brand` varchar(50) NOT NULL,
+  `id_drivers_model` varchar(50) NOT NULL,
+  `id_drivers_number` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `drivers_name (Satellite)`
+--
+
+CREATE TABLE `drivers_name (Satellite)` (
+  `id` int(20) NOT NULL,
+  `id_drivers_name` int(50) NOT NULL,
+  `id_drivers_surname` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `order(LINK)`
+--
+
+CREATE TABLE `order(LINK)` (
+  `id` int(20) NOT NULL,
+  `id_client` int(20) NOT NULL,
+  `id_voyage` int(20) NOT NULL,
+  `id_drivers` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `voyage(HUB)`
+--
+
+CREATE TABLE `voyage(HUB)` (
+  `id` int(20) NOT NULL,
+  `id_voyage_destination` int(20) NOT NULL,
+  `id_voyage_date` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `voyage(Satelliite)`
+--
+
+CREATE TABLE `voyage(Satelliite)` (
+  `id` int(20) NOT NULL,
+  `data start` date NOT NULL,
+  `data finish` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `voyage_description(Satelliite)`
+--
+
+CREATE TABLE `voyage_description(Satelliite)` (
+  `id` int(20) NOT NULL,
+  `description` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `client(HUB)`
+--
+ALTER TABLE `client(HUB)`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `id_2` (`id`),
+  ADD KEY `id_3` (`id`);
+
+--
+-- Индексы таблицы `client(Satellite)`
+--
+ALTER TABLE `client(Satellite)`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+--
+-- Индексы таблицы `drivers (HUB)`
+--
+ALTER TABLE `drivers (HUB)`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`),
+  ADD KEY `id_drivers_car` (`id_drivers_car`),
+  ADD KEY `id_2` (`id`);
+
+--
+-- Индексы таблицы `drivers_car (Satellite)`
+--
+ALTER TABLE `drivers_car (Satellite)`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`),
+  ADD KEY `id_2` (`id`);
+
+--
+-- Индексы таблицы `drivers_name (Satellite)`
+--
+ALTER TABLE `drivers_name (Satellite)`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+--
+-- Индексы таблицы `order(LINK)`
+--
+ALTER TABLE `order(LINK)`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_client` (`id_client`);
+
+--
+-- Индексы таблицы `voyage(HUB)`
+--
+ALTER TABLE `voyage(HUB)`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_voyage_date` (`id_voyage_date`);
+
+--
+-- Индексы таблицы `voyage(Satelliite)`
+--
+ALTER TABLE `voyage(Satelliite)`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+--
+-- Индексы таблицы `voyage_description(Satelliite)`
+--
+ALTER TABLE `voyage_description(Satelliite)`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `client(HUB)`
+--
+ALTER TABLE `client(HUB)`
+  ADD CONSTRAINT `client(HUB)_ibfk_1` FOREIGN KEY (`id`) REFERENCES `client(Satellite)` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `drivers (HUB)`
+--
+ALTER TABLE `drivers (HUB)`
+  ADD CONSTRAINT `drivers (HUB)_ibfk_1` FOREIGN KEY (`id_drivers_car`) REFERENCES `client(HUB)` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `drivers_name (Satellite)`
+--
+ALTER TABLE `drivers_name (Satellite)`
+  ADD CONSTRAINT `drivers_name (Satellite)_ibfk_1` FOREIGN KEY (`id`) REFERENCES `drivers (HUB)` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `order(LINK)`
+--
+ALTER TABLE `order(LINK)`
+  ADD CONSTRAINT `order(LINK)_ibfk_1` FOREIGN KEY (`id_client`) REFERENCES `client(HUB)` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `voyage(HUB)`
+--
+ALTER TABLE `voyage(HUB)`
+  ADD CONSTRAINT `voyage(HUB)_ibfk_1` FOREIGN KEY (`id_voyage_date`) REFERENCES `voyage(Satelliite)` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
