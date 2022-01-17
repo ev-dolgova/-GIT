@@ -1,0 +1,167 @@
+1.	-- База данных: `std_1295_hd`
+2.	--
+3.	 
+4.	-- --------------------------------------------------------
+5.	 
+6.	--
+7.	-- Структура таблицы `cars`
+8.	--
+9.	 
+10.	CREATE TABLE `cars` (
+11.	  `id` int(20) NOT NULL,
+12.	  `brand` text NOT NULL,
+13.	  `model car` text NOT NULL,
+14.	  `number` int(20) NOT NULL
+15.	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+16.	 
+17.	-- --------------------------------------------------------
+18.	 
+19.	--
+20.	-- Структура таблицы `client`
+21.	--
+22.	 
+23.	CREATE TABLE `client` (
+24.	  `id` int(20) NOT NULL,
+25.	  `company` text NOT NULL,
+26.	  `agent` text NOT NULL,
+27.	  `telephone` varchar(20) NOT NULL
+28.	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+29.	 
+30.	-- --------------------------------------------------------
+31.	 
+32.	--
+33.	-- Структура таблицы `destination`
+34.	--
+35.	 
+36.	CREATE TABLE `destination` (
+37.	  `id` int(11) NOT NULL,
+38.	  `country` text NOT NULL,
+39.	  `city` text NOT NULL,
+40.	  `street` text NOT NULL,
+41.	  `house` int(11) NOT NULL
+42.	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+43.	 
+44.	-- --------------------------------------------------------
+45.	 
+46.	--
+47.	-- Структура таблицы `drivers`
+48.	--
+49.	 
+50.	CREATE TABLE `drivers` (
+51.	  `id` int(20) NOT NULL,
+52.	  `name` text NOT NULL,
+53.	  `surname` text NOT NULL,
+54.	  `telephone` int(20) NOT NULL,
+55.	  `driver document` int(20) NOT NULL,
+56.	  `id_car` int(20) NOT NULL
+57.	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+58.	 
+59.	-- --------------------------------------------------------
+60.	 
+61.	--
+62.	-- Структура таблицы `order`
+63.	--
+64.	 
+65.	CREATE TABLE `order` (
+66.	  `id` int(20) NOT NULL,
+67.	  `id_client` int(20) NOT NULL,
+68.	  `description` int(20) NOT NULL,
+69.	  `date` date NOT NULL
+70.	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+71.	 
+72.	-- --------------------------------------------------------
+73.	 
+74.	--
+75.	-- Структура таблицы `voyage`
+76.	--
+77.	 
+78.	CREATE TABLE `voyage` (
+79.	  `id` int(11) NOT NULL,
+80.	  `id_destination` int(11) NOT NULL,
+81.	  `date start` date NOT NULL,
+82.	  `date finish` date NOT NULL,
+83.	  `id_order` int(11) NOT NULL,
+84.	  `is_drivers` int(11) NOT NULL
+85.	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+86.	 
+87.	--
+88.	-- Индексы сохранённых таблиц
+89.	--
+90.	 
+91.	--
+92.	-- Индексы таблицы `cars`
+93.	--
+94.	ALTER TABLE `cars`
+95.	  ADD PRIMARY KEY (`id`);
+96.	 
+97.	--
+98.	-- Индексы таблицы `client`
+99.	--
+100.	ALTER TABLE `client`
+101.	  ADD PRIMARY KEY (`id`),
+102.	  ADD KEY `id` (`id`);
+103.	 
+104.	--
+105.	-- Индексы таблицы `destination`
+106.	--
+107.	ALTER TABLE `destination`
+108.	  ADD PRIMARY KEY (`id`),
+109.	  ADD KEY `id` (`id`),
+110.	  ADD KEY `id_2` (`id`),
+111.	  ADD KEY `id_3` (`id`);
+112.	 
+113.	--
+114.	-- Индексы таблицы `drivers`
+115.	--
+116.	ALTER TABLE `drivers`
+117.	  ADD PRIMARY KEY (`id`),
+118.	  ADD KEY `id` (`id`),
+119.	  ADD KEY `id_2` (`id`),
+120.	  ADD KEY `id_car` (`id_car`);
+121.	 
+122.	--
+123.	-- Индексы таблицы `order`
+124.	--
+125.	ALTER TABLE `order`
+126.	  ADD PRIMARY KEY (`id`),
+127.	  ADD KEY `id` (`id`),
+128.	  ADD KEY `id_client` (`id_client`);
+129.	 
+130.	--
+131.	-- Индексы таблицы `voyage`
+132.	--
+133.	ALTER TABLE `voyage`
+134.	  ADD PRIMARY KEY (`id`),
+135.	  ADD UNIQUE KEY `id_destination` (`id_destination`),
+136.	  ADD KEY `id_order` (`id_order`),
+137.	  ADD KEY `is_drivers` (`is_drivers`);
+138.	 
+139.	--
+140.	-- Ограничения внешнего ключа сохраненных таблиц
+141.	--
+142.	 
+143.	--
+144.	-- Ограничения внешнего ключа таблицы `drivers`
+145.	--
+146.	ALTER TABLE `drivers`
+147.	  ADD CONSTRAINT `drivers_ibfk_1` FOREIGN KEY (`id_car`) REFERENCES `cars` (`id`);
+148.	 
+149.	--
+150.	-- Ограничения внешнего ключа таблицы `order`
+151.	--
+152.	ALTER TABLE `order`
+153.	  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`id_client`) REFERENCES `client` (`id`);
+154.	 
+155.	--
+156.	-- Ограничения внешнего ключа таблицы `voyage`
+157.	--
+158.	ALTER TABLE `voyage`
+159.	  ADD CONSTRAINT `voyage_ibfk_1` FOREIGN KEY (`id_destination`) REFERENCES `destination` (`id`),
+160.	  ADD CONSTRAINT `voyage_ibfk_2` FOREIGN KEY (`id_order`) REFERENCES `order` (`id`),
+161.	  ADD CONSTRAINT `voyage_ibfk_3` FOREIGN KEY (`is_drivers`) REFERENCES `drivers` (`id`);
+162.	COMMIT;
+163.	 
+164.	/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+165.	/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+166.	/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
